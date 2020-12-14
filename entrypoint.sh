@@ -24,6 +24,14 @@ SWITCHES="$INPUT_SWITCHES"
 RSH="ssh -o StrictHostKeyChecking=no -p $INPUT_REMOTE_PORT $INPUT_RSH"
 LOCAL_PATH="$GITHUB_WORKSPACE/$INPUT_PATH"
 DSN="$INPUT_REMOTE_USER@$INPUT_REMOTE_HOST"
+SSH="ssh -o StrictHostKeyChecking=no -p $INPUT_REMOTE_PORT $DSN"
 
 # Deploy.
 sh -c "rsync $SWITCHES -e '$RSH' $LOCAL_PATH $DSN:$INPUT_REMOTE_PATH"
+
+# Post Deploy
+if [ $INPUT_POST_DEPLOY_SH ] ; then
+	echo $PWD/.github/workflows
+	ls -la .github/workflows/$INPUT_POST_DEPLOY_SH
+	sh -c ".github/workflows/$INPUT_POST_DEPLOY_SH $DEPLOY_BRANCH"
+fi

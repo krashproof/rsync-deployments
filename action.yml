@@ -37,6 +37,10 @@ inputs:
   remote_key:
     description: 'The remote key'
     required: true
+  post_deploy_sh:
+    description: 'filename of post-deploy script'
+    required: false
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
