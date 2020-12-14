@@ -2,6 +2,9 @@ name: 'Rsync Deployments Action'
 description: 'GitHub Action for deploying code via rsync over ssh'
 author: 'Burnett01'
 inputs:
+  deploy_branch:
+    description: 'The git repo branch'
+    required: true
   switches:
     description: 'The switches'
     required: true
@@ -13,9 +16,14 @@ inputs:
     description: 'The local path'
     required: false
     default: ''
-  remote_path:
+  prod_path:
     description: 'The remote path'
     required: true
+    default: /tmp/prod
+  stage_path:
+    description: 'The remote path'
+    required: false
+    default: /tmp/stage
   remote_host:
     description: 'The remote host'
     required: true

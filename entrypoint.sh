@@ -6,6 +6,18 @@ echo "$INPUT_REMOTE_KEY" | agent-add
 
 # Add strict errors.
 set -eu
+DEPLOY_BRANCH=$INPUT_DEPLOY_BRANCH
+
+if [ $DEPLOY_BRANCH == "master" ]; then
+	INPUT_REMOTE_PATH=$INPUT_PROD_PATH
+	echo "On branch master, deploy to path : $INPUT_REMOTE_PATH"
+elif [ $DEPLOY_BRANCH == "develop" ]; then
+	INPUT_REMOTE_PATH=$INPUT_STAGE_PATH
+	echo "On branch develop, deploy to path: $INPUT_REMOTE_PATH"
+else
+	echo "Invalid DEPLOY_BRANCH name"
+	exit 1
+fi
 
 # Variables.
 SWITCHES="$INPUT_SWITCHES"
